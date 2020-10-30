@@ -1,4 +1,5 @@
 //<reference types="cypress" />
+import faker from 'faker'
 
 describe('regression test suite', function(){
   
@@ -49,7 +50,23 @@ describe('regression test suite', function(){
         cy.get('a.btn:nth-child(1)').contains('Back').click()
         cy.contains('Tester Hotel Overview')
     })
-    it('perform valid logou', function(){
+    it('create a new room', function(){
+        cy.get(':nth-child(1) > .btn').click()
+        cy.get('a.btn:nth-child(2)').click()
+        cy.get('div.field:nth-child(1) > select:nth-child(2)').select('Double')
+        let roomNumber=faker.random.number(1000)
+        cy.get('div.field:nth-child(2) > input:nth-child(2)').type(roomNumber)
+        cy.get('div.field:nth-child(3) > input:nth-child(2)').type(faker.random.number(4))
+        cy.get('.checkbox').click()
+        cy.get('div.field:nth-child(5) > input:nth-child(2)').type(faker.random.number({min:25 ,max:50}))
+        cy.get('div.field:nth-child(6) > select:nth-child(2)').select('Balcony')
+        cy.get('a.btn:nth-child(2)').click()
+        cy.contains(roomNumber)
+        
+
+    })
+
+    it('perform valid logout', function(){
         cy.get('.user > .btn').contains('Logout').click()
         cy.contains('Login')
     })
